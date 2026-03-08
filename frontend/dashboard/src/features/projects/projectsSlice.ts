@@ -6,7 +6,14 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', async ()
     return response.data;
 });
 
-export const addProject = createAsyncThunk('projects/addProject', async (project: { name: string; description?: string; skills: any[]; workflows: any[] }) => {
+export const addProject = createAsyncThunk('projects/addProject', async (project: {
+    name: string;
+    description?: string;
+    repositoryUrl?: string;
+    branch?: string;
+    skills: any[];
+    workflows: any[]
+}) => {
     const response = await projectService.createProject(project);
     return response.data;
 });
@@ -19,6 +26,8 @@ interface Project {
     tags?: string[];
     skills?: any[];
     workflows?: any[];
+    repositoryUrl?: string;
+    branch?: string;
     createdAt: string;
     updatedAt: string;
 }

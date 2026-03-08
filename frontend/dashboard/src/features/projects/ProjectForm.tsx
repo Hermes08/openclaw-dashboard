@@ -14,6 +14,8 @@ import SkillSelector from './SkillSelector';
 const ProjectForm: React.FC = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [repositoryUrl, setRepositoryUrl] = useState('');
+    const [branch, setBranch] = useState('main');
     const [selectedSkills, setSelectedSkills] = useState<any[]>([]);
     const dispatch = useAppDispatch();
 
@@ -52,11 +54,15 @@ const ProjectForm: React.FC = () => {
             dispatch(addProject({
                 name,
                 description,
+                repositoryUrl,
+                branch,
                 skills: selectedSkills,
                 workflows
             }));
             setName('');
             setDescription('');
+            setRepositoryUrl('');
+            setBranch('main');
             setSelectedSkills([]);
         }
     };
