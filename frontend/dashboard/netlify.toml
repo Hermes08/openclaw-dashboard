@@ -1,11 +1,13 @@
 [build]
+  base = "frontend/dashboard"
   command = "npm run build"
   publish = "dist"
 
 [[redirects]]
   from = "/api/*"
-  to = "/404"
-  status = 404
+  to = "https://2026ai.online/api/:splat"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
