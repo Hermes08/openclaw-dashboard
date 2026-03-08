@@ -8,7 +8,8 @@ import {
     TableRow,
     Paper,
     Typography,
-    Chip
+    Chip,
+    Box
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchProjects } from './projectsSlice';

@@ -1,17 +1,13 @@
 import React from 'react';
 import {
     Box,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
     Checkbox,
     FormControlLabel,
     FormGroup,
     Typography,
     Divider
 } from '@mui/material';
-import { SKILLS, Skill } from '../../constants/skills';
+import { SKILLS } from '../../constants/skills';
 
 interface SkillSelectorProps {
     selectedSkills: any[];
