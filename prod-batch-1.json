@@ -1,0 +1,103 @@
+{
+    "date": "2026-03-08",
+    "source": "seo-optimizer-and-content-gen",
+    "project": "vip-expats-nextjs",
+    "tasks": [
+        {
+            "id": "prod-meta-contacto",
+            "type": "seo_metadata",
+            "title": "Optimize Meta Tags for Contact Page",
+            "status": "pending",
+            "priority": 1,
+            "payload": {
+                "id": "prod-meta-contacto",
+                "type": "seo_metadata",
+                "title": "Optimize Meta Tags for Contact Page",
+                "targetUrl": "app/[lang]/contacto/page.tsx",
+                "priority": 1,
+                "actions": [
+                    "Export proper Next.js metadata in app/[lang]/contacto/page.tsx",
+                    "Ensure title includes 'Contact Panama Real Estate Experts'",
+                    "Add compelling meta description in both English and Spanish"
+                ]
+            }
+        },
+        {
+            "id": "prod-blog-golden-visa",
+            "type": "content-creation",
+            "title": "Create Panama Golden Visa 2026 Guide",
+            "status": "pending",
+            "priority": 1,
+            "payload": {
+                "id": "prod-blog-golden-visa",
+                "type": "content-creation",
+                "title": "Create Panama Golden Visa 2026 Guide",
+                "targetUrl": "/blog/panama-golden-visa-2026",
+                "priority": 1,
+                "actions": [
+                    "Create a new blog post file under app/[lang]/blog/panama-golden-visa-2026/page.tsx",
+                    "Include target keywords: panama golden visa 2026, panama investment visa, residency by investment",
+                    "Write an informative React component detailing the $300k-$500k investment requirements."
+                ]
+            }
+        },
+        {
+            "id": "prod-sitemap-generation",
+            "type": "technical-seo",
+            "title": "Implement Dynamic Sitemap",
+            "status": "pending",
+            "priority": 2,
+            "payload": {
+                "id": "prod-sitemap-generation",
+                "type": "technical-seo",
+                "title": "Implement Dynamic Sitemap",
+                "priority": 2,
+                "actions": [
+                    "Create or update app/sitemap.ts to dynamically generate a sitemap",
+                    "Include the homepage, /contacto, and /tours in the sitemap output",
+                    "Base url should be https://www.panamarealestatesale.com"
+                ]
+            }
+        },
+        {
+            "id": "prod-robots-optimization",
+            "type": "technical-seo",
+            "title": "Optimize robots.ts",
+            "status": "pending",
+            "priority": 2,
+            "payload": {
+                "id": "prod-robots-optimization",
+                "type": "technical-seo",
+                "title": "Optimize robots.ts",
+                "priority": 2,
+                "actions": [
+                    "Update app/robots.ts to allow all crawlers",
+                    "Ensure the sitemap URL points to https://www.panamarealestatesale.com/sitemap.xml"
+                ]
+            }
+        },
+        {
+            "id": "prod-tours-optimization",
+            "type": "content-optimization",
+            "title": "Optimize Tours Page Keywords",
+            "status": "pending",
+            "priority": 3,
+            "payload": {
+                "id": "prod-tours-optimization",
+                "type": "content-optimization",
+                "title": "Optimize Tours Page Keywords",
+                "targetUrl": "app/[lang]/tours/page.tsx",
+                "priority": 3,
+                "actions": [
+                    "Inject the exact keyword 'panama relocation tours' into the H1 or main summary of the tours page",
+                    "Add structured data or compelling bullet points emphasizing ROI and private access"
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "generated_by": "openclaw-agent-swarm",
+        "execution_id": "prod-batch-1",
+        "timestamp": "2026-03-08T06:50:00Z"
+    }
+}
