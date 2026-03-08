@@ -74,6 +74,9 @@ const projectsSlice = createSlice({
                 }
                 // If not an array (e.g. got HTML fallback), keep the initial/existing items
             })
+            .addCase(fetchProjects.rejected, (state) => {
+                state.status = 'failed';
+            })
             .addCase(addProject.fulfilled, (state, action) => {
                 if (action.payload && action.payload.id) {
                     state.items.push(action.payload);
