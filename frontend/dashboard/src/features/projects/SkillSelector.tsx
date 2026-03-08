@@ -73,7 +73,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({ selectedSkills, onChange 
                     const currentSkill = selectedSkills.find(s => s.id === skill.id);
 
                     return (
-                        <Grid item xs={12} md={6} key={skill.id}>
+                        <Grid size={{ xs: 12, md: 6 }} key={skill.id}>
                             <Paper
                                 onClick={() => handleMainSkillChange(skill.id)}
                                 sx={{

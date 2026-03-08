@@ -31,7 +31,7 @@ const ProjectList: React.FC = () => {
     return (
         <Grid container spacing={3}>
             {projects.map((project: any) => (
-                <Grid item xs={12} sm={6} lg={4} key={project.id}>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={project.id}>
                     <Paper
                         sx={{
                             p: 3,
