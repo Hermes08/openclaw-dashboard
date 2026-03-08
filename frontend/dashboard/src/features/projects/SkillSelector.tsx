@@ -4,10 +4,10 @@ import {
     Typography,
     Divider,
     Paper,
-    Grid,
     Chip,
     IconButton
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import LanguageIcon from '@mui/icons-material/Language';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';

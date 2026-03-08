@@ -4,12 +4,9 @@ import {
     TextField,
     Button,
     Typography,
-    Paper,
-    Grid,
-    Chip,
-    IconButton,
-    LinearProgress
+    Paper
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useAppDispatch } from '../../store/hooks';
 import { addProject } from './projectsSlice';
 import SkillSelector from './SkillSelector';
@@ -71,7 +68,7 @@ const ProjectForm: React.FC = () => {
             <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>New Project</Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <TextField
                             label="Project Name"
                             placeholder="e.g. My Awesome Site"
@@ -85,7 +82,7 @@ const ProjectForm: React.FC = () => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <TextField
                             label="Description"
                             placeholder="Briefly describe the goal..."
