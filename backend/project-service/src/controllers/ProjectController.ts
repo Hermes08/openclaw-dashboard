@@ -34,4 +34,31 @@ export class ProjectController {
         const result = await this.projectRepository.delete(req.params.id);
         res.json(result);
     }
+
+    async getPendingTasks(req: Request, res: Response) {
+        const projects = await this.projectRepository.find();
+        const pendingTasks: any[] = [];
+
+        projects.forEach(project => {
+            if (project.workflows && Array.isArray(project.workflows)) {
+                project.workflows.forEach((workflow: any) => {
+                    if (workflow.steps && Array.isArray(workflow.steps)) {
+                        workflow.steps.forEach((step: any) => {
+                            if (step.status === 'pending') {
+                                pendingTasks.push({
+                                    projectId: project.id,
+                                    projectName: project.name,
+                                    repositoryUrl: project.repositoryUrl,
+                                    branch: project.branch,
+                                    task: step
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        res.json(pendingTasks);
+    }
 }

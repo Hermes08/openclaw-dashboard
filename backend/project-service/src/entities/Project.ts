@@ -23,6 +23,12 @@ export class Project {
     @Column("json", { nullable: true })
     workflows?: any;
 
+    @Column({ nullable: true })
+    repositoryUrl?: string;
+
+    @Column({ default: "main" })
+    branch!: string;
+
     @CreateDateColumn()
     createdAt!: Date;
 
