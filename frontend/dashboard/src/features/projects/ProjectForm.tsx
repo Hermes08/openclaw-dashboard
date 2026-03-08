@@ -57,33 +57,62 @@ const ProjectForm: React.FC = () => {
     };
 
     return (
-        <Paper sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" gutterBottom>Create New Project</Typography>
-            <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <TextField
-                    label="Project Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    fullWidth
-                />
-                <TextField
-                    label="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    multiline
-                    rows={3}
-                    fullWidth
-                />
+        <Paper sx={{ p: 4, mb: 4, borderRadius: 3 }}>
+            <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>New Project</Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            label="Project Name"
+                            placeholder="e.g. My Awesome Site"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            InputProps={{
+                                sx: { bgcolor: 'rgba(255, 255, 255, 0.03)' }
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            label="Description"
+                            placeholder="Briefly describe the goal..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            multiline
+                            rows={1}
+                            fullWidth
+                            variant="outlined"
+                            InputProps={{
+                                sx: { bgcolor: 'rgba(255, 255, 255, 0.03)' }
+                            }}
+                        />
+                    </Grid>
+                </Grid>
 
                 <SkillSelector
                     selectedSkills={selectedSkills}
                     onChange={setSelectedSkills}
                 />
 
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
-                    Create Project
-                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        sx={{
+                            px: 4,
+                            py: 1.5,
+                            fontSize: '1rem',
+                            boxShadow: '0 8px 16px -4px rgba(99, 102, 241, 0.4)'
+                        }}
+                    >
+                        Launch Project
+                    </Button>
+                </Box>
             </Box>
         </Paper>
     );
