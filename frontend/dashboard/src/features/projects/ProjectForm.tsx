@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
     Box,
+    Paper,
+    Typography,
     TextField,
     Button,
-    Typography,
-    Paper
+    Grid
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import { useAppDispatch } from '../../store/hooks';
 import { addProject } from './projectsSlice';
 import SkillSelector from './SkillSelector';
@@ -21,18 +21,16 @@ const ProjectForm: React.FC = () => {
         const workflows: any[] = [];
         skills.forEach(skill => {
             if (skill.id === 'website') {
-                // Logical sequence for website
                 const sequence = ['content', 'articles', 'seo'].filter(ss => skill.subSkills.includes(ss));
                 workflows.push({
                     skillId: 'website',
                     steps: sequence.map((step, index) => ({
                         id: step,
                         order: index,
-                        automated: step === 'seo' ? skill.automated : false // Example logic
+                        automated: step === 'seo' ? skill.automated : false
                     }))
                 });
             } else if (skill.id === 'youtube') {
-                // Logical sequence for youtube
                 const sequence = ['video', 'publishing'].filter(ss => skill.subSkills.includes(ss));
                 workflows.push({
                     skillId: 'youtube',

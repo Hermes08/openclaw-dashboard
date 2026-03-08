@@ -5,9 +5,9 @@ import {
     Typography,
     Chip,
     IconButton,
-    LinearProgress
+    LinearProgress,
+    Grid
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
