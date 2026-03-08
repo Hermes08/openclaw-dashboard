@@ -17,6 +17,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ProjectList from './features/projects/ProjectList';
 import ProjectForm from './features/projects/ProjectForm';
+import TasksView from './features/projects/TasksView';
 
 const drawerWidth = 240;
 
@@ -112,6 +113,7 @@ const App: React.FC = () => {
                                     </Box>
                                 </Box>
                             } />
+                            <Route path="/projects/:id/tasks" element={<TasksView />} />
                             <Route path="/automation" element={
                                 <Box>
                                     <Typography variant="h4" gutterBottom>Automation Hub</Typography>

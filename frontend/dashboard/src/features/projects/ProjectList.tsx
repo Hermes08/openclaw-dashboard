@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Box,
     Paper,
@@ -15,6 +16,7 @@ import { fetchProjects } from './projectsSlice';
 
 const ProjectList: React.FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const projects = useAppSelector((state: any) => state.projects.items);
     const status = useAppSelector((state: any) => state.projects.status);
 
@@ -33,11 +35,13 @@ const ProjectList: React.FC = () => {
             {projects.map((project: any) => (
                 <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={project.id}>
                     <Paper
+                        onClick={() => navigate(`/projects/${project.id}/tasks`)}
                         sx={{
                             p: 3,
                             height: '100%',
                             display: 'flex',
                             flexDirection: 'column',
+                            cursor: 'pointer',
                             transition: 'all 0.2s ease-in-out',
                             '&:hover': {
                                 transform: 'scale(1.02)',

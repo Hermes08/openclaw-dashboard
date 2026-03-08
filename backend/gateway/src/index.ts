@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json());
+// NOTE: Do NOT use express.json() here — the Gateway is a pure proxy.
+// Parsing the body here would consume it before createProxyMiddleware can forward it.
 
 // Auth Middleware
 const authMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -32,7 +33,7 @@ app.use(authMiddleware);
 
 // Proxy routes
 app.use('/api/projects', createProxyMiddleware({
-    target: process.env.PROJECT_SERVICE_URL || 'http://localhost:3001',
+    target: process.env.PROJECT_SERVICE_URL || 'http://localhost:3002',
     changeOrigin: true,
     pathRewrite: {
         '^/api/projects': '',
