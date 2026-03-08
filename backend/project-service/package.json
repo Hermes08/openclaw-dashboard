@@ -1,0 +1,26 @@
+{
+    "name": "project-service",
+    "version": "1.0.0",
+    "description": "Microservice for managing projects, websites, and channels.",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "node dist/index.js",
+        "dev": "nodemon src/index.ts",
+        "build": "tsc"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "pg": "^8.11.2",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.3.17"
+    },
+    "devDependencies": {
+        "@types/dotenv": "^6.1.1",
+        "@types/express": "^4.17.25",
+        "@types/node": "^20.19.37",
+        "nodemon": "^3.1.14",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    }
+}
