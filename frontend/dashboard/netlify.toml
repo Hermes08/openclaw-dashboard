@@ -1,5 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 [[redirects]]
   from = "/api/*"
+  to = "/404"
   status = 404
 
 [[redirects]]
