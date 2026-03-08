@@ -1,0 +1,57 @@
+[
+    {
+        "id": "ui-task-1",
+        "type": "content-optimization",
+        "title": "Update Homepage H1",
+        "priority": "high",
+        "payload": {
+            "path": "app/[lang]/page.tsx",
+            "instruction": "Update the main homepage H1 to be more SEO-friendly for 'Panama Real Estate'.",
+            "context_pointers": "CRITICAL: Before executing, analyze the existing repository context. Use view_file on app/[lang]/layout.tsx and app/globals.css to respect current structure, design, colors, layout patterns, and writing tone. Do not write generic code; perfectly match the existing site design and wrapper tags."
+        }
+    },
+    {
+        "id": "ui-task-2",
+        "type": "content-creation",
+        "title": "Create Article: Cost of Living in Panama vs US",
+        "priority": "normal",
+        "payload": {
+            "path": "app/[lang]/blog/cost-of-living-panama-vs-us/page.tsx",
+            "instruction": "Create a comprehensive SEO article comparing the cost of living in Panama vs the US.",
+            "context_pointers": "CRITICAL: Before executing, analyze the existing repository context. Use view_file on app/[lang]/layout.tsx and app/globals.css to respect current structure, design, colors, layout patterns, and writing tone. Do not write generic code; perfectly match the existing site design and wrapper tags."
+        }
+    },
+    {
+        "id": "ui-task-3",
+        "type": "seo_metadata",
+        "title": "Optimize /about Page Metadata",
+        "priority": "normal",
+        "payload": {
+            "path": "app/[lang]/about/page.tsx",
+            "instruction": "Optimize the metadata (title, description) for the /about page.",
+            "context_pointers": "CRITICAL: Before executing, analyze the existing repository context. Use view_file on app/[lang]/layout.tsx and app/globals.css to respect current structure, design, colors, layout patterns, and writing tone. Do not write generic code; perfectly match the existing site design and wrapper tags."
+        }
+    },
+    {
+        "id": "ui-task-4",
+        "type": "content-optimization",
+        "title": "Add Internal Links to /relocation Page",
+        "priority": "normal",
+        "payload": {
+            "path": "app/[lang]/relocation/page.tsx",
+            "instruction": "Add contextually relevant internal links to other areas of the site within the /relocation page content.",
+            "context_pointers": "CRITICAL: Before executing, analyze the existing repository context. Use view_file on app/[lang]/layout.tsx and app/globals.css to respect current structure, design, colors, layout patterns, and writing tone. Do not write generic code; perfectly match the existing site design and wrapper tags."
+        }
+    },
+    {
+        "id": "ui-task-5",
+        "type": "content-creation",
+        "title": "Create Landing Page: Panama City Real Estate",
+        "priority": "high",
+        "payload": {
+            "path": "app/[lang]/proyectos/panama-city-real-estate/page.tsx",
+            "instruction": "Create a new generic landing page for 'Panama City Real Estate' under the /proyectos directory.",
+            "context_pointers": "CRITICAL: Before executing, analyze the existing repository context. Use view_file on app/[lang]/layout.tsx and app/globals.css to respect current structure, design, colors, layout patterns, and writing tone. Do not write generic code; perfectly match the existing site design and wrapper tags."
+        }
+    }
+]
