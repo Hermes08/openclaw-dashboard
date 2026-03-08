@@ -6,8 +6,7 @@ import {
     Chip,
     LinearProgress,
     IconButton,
-    Tooltip,
-    Divider
+    Tooltip
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
