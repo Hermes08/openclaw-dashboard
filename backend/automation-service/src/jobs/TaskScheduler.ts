@@ -1,17 +1,33 @@
 import cron from 'node-cron';
 import { QueueService } from '../services/QueueService';
+import { WorkflowExecutor } from '../workflows/WorkflowExecutor';
 
 export class TaskScheduler {
     private queueService = new QueueService();
+    private workflowExecutor = new WorkflowExecutor();
 
     init() {
-        // Example: Run a task every minute
-        cron.schedule('* * * * *', async () => {
-            console.log('Running scheduled task...');
+        // Scheduled SEO Audit for projects (Example: Daily at midnight)
+        cron.schedule('0 0 * * *', async () => {
+            console.log('Triggering automated SEO audits...');
+            // In a real scenario, this would fetch active projects from project-service
             await this.queueService.sendToQueue('tasks', {
-                type: 'CRON_JOB',
-                payload: { action: 'HEARTBEAT', timestamp: new Date() }
+                type: 'SEO_AUDIT',
+                payload: { 
+                    projectId: 'all', 
+                    action: 'SCAN_ALL_DOMAINS',
+                    timestamp: new Date() 
+                }
             });
         });
+
+        // Listen to queue and execute tasks
+        this.startWorker();
+    }
+
+    private async startWorker() {
+        // Simple mock of a worker listening to the queue
+        // In production, this would be a separate process
+        console.log("Worker started, waiting for tasks...");
     }
 }

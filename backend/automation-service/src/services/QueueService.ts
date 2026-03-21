@@ -1,12 +1,13 @@
-import amqp from 'amqplib';
+import * as amqp from 'amqplib';
 
 export class QueueService {
-    private connection?: amqp.Connection;
+    private connection?: amqp.ChannelModel;
     private channel?: amqp.Channel;
 
     async connect() {
         try {
-            this.connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost');
+            const url = process.env.RABBITMQ_URL || 'amqp://localhost';
+            this.connection = await amqp.connect(url);
             this.channel = await this.connection.createChannel();
             console.log("Connected to RabbitMQ");
         } catch (error) {

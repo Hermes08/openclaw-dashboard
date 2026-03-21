@@ -4,11 +4,20 @@ description: Check the OpenGravity dashboard for pending tasks from OpenClaw age
 
 # Check Dashboard for Pending Tasks
 
+## Credentials (do not expose to the user)
+
+- **SSH**: `root@187.77.2.112` — password: `Welcome1234(` (use only if needed for server-side commands)
+- **API GET key**: `openclaw123` — used for fetching tasks
+- **API PUT key**: `dev-key-123` — used for marking tasks complete
+- **⚠️ Note**: The project-service API is publicly reachable at `http://187.77.2.112:3001` — **no SSH tunnel needed** for API calls.
+
+---
+
 ## Step 1: Fetch all pending tasks
 
 // turbo
 ```bash
-ssh -o StrictHostKeyChecking=no root@187.77.2.112 "curl -s http://localhost:3001/api/projects/pending-tasks -H 'X-API-KEY: dev-key-123'" 2>/dev/null
+curl -s http://187.77.2.112:3001/api/projects/pending-tasks -H 'X-API-KEY: openclaw123'
 ```
 
 Parse the JSON response. Each item contains: `projectId`, `projectName`, `repositoryUrl`, `branch`, and `task` (with `id`, `type`, `title`, `priority`, `payload`).
@@ -36,10 +45,19 @@ If not found, clone it into `/Users/davidaguirre/Desktop/`:
 cd /Users/davidaguirre/Desktop && git clone <repositoryUrl>
 ```
 
-### 2b. Ensure correct branch
+### 2b. Detect the active branch and pull latest
+
+Always auto-detect the default remote branch instead of assuming `main`:
+
+// turbo
+```bash
+cd <REPO_PATH> && git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
+```
+
+Then check it out and pull:
 
 ```bash
-cd <REPO_PATH> && git checkout <branch> && git pull origin <branch>
+cd <REPO_PATH> && git checkout <DETECTED_BRANCH> && git pull origin <DETECTED_BRANCH>
 ```
 
 ## Step 3: Dynamic Context Analysis (CRITICAL)
@@ -66,20 +84,30 @@ Read the task's `payload` carefully — it contains specific instructions for wh
 
 ## Step 5: Commit and push
 
-After all tasks for a project are executed:
+After all tasks for a project are executed, stage only the files that were changed (do NOT use `git add -A` to avoid accidentally staging untracked or deleted files from parent repos):
 
 ```bash
-cd <REPO_PATH> && git add -A && git commit -m "[Antigravity] <summary of changes>" && git push origin <branch>
+cd <REPO_PATH> && git add <file1> <file2> ... && git commit -m "[Antigravity] <summary of changes>"
 ```
 
-## Step 6: Mark each task as completed
-
-For each completed task:
+Then detect the remote branch and push:
 
 // turbo
 ```bash
-ssh -o StrictHostKeyChecking=no root@187.77.2.112 "curl -s -X PUT http://localhost:3001/api/projects/<PROJECT_ID>/tasks/<TASK_ID>/complete -H 'Content-Type: application/json' -H 'X-API-KEY: dev-key-123' -d '{\"executedBy\":\"antigravity-ai\"}'" 2>/dev/null
+cd <REPO_PATH> && BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}') && git push origin $BRANCH
 ```
+
+## Step 6: Mark each completed task via the API
+
+For **each** task that was successfully committed, run this immediately after push (use `dev-key-123` for PUT — different from the GET key):
+
+// turbo
+```bash
+curl -s -X PUT "http://187.77.2.112:3001/api/projects/<PROJECT_ID>/tasks/<TASK_ID>/complete" -H 'Content-Type: application/json' -H 'X-API-KEY: dev-key-123' -d '{"executedBy":"antigravity-ai"}'
+```
+
+Replace `<PROJECT_ID>` and `<TASK_ID>` with the actual values from Step 1. Repeat for every task.
+
 
 ## Step 7: Report
 
