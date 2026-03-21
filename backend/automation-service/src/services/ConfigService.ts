@@ -24,6 +24,10 @@ export class ConfigService {
                     clientId: project.skills?.youtube?.clientId || process.env.YOUTUBE_CLIENT_ID,
                     clientSecret: project.skills?.youtube?.clientSecret || process.env.YOUTUBE_CLIENT_SECRET,
                     refreshToken: project.skills?.youtube?.refreshToken || process.env.YOUTUBE_REFRESH_TOKEN
+                },
+                crm: {
+                    baseUrl: project.skills?.crm?.baseUrl || process.env.CRM_API_BASE,
+                    apiKey: project.skills?.crm?.apiKey || process.env.CRM_API_KEY
                 }
             };
         } catch (error: any) {
