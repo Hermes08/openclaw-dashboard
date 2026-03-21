@@ -1,0 +1,3 @@
+[submodule "vip-expats-nextjs"]
+	path = vip-expats-nextjs
+	url = https://github.com/Hermes08/vip-expats-nextjs.git
