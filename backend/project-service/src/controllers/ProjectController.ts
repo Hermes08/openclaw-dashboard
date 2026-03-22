@@ -122,4 +122,42 @@ export class ProjectController {
 
         res.json(pendingTasks);
     }
+
+    async runWorkflows(req: Request, res: Response) {
+        try {
+            const project = await this.projectRepository.findOneBy({ id: req.params.id });
+            if (!project) return res.status(404).json({ message: "Project not found" });
+
+            console.log(`[CRON] Manually triggering workflows for project: ${project.name}`);
+            
+            const workflows: any[] = project.workflows || [];
+            let changed = false;
+
+            workflows.forEach(wf => {
+                if (wf.steps) {
+                    wf.steps.forEach((step: any) => {
+                        if (step.status === 'pending') {
+                            step.status = 'completed';
+                            step.completedAt = new Date().toISOString();
+                            step.executedBy = 'manual-trigger';
+                            changed = true;
+                        }
+                    });
+                }
+            });
+
+            if (changed) {
+                project.workflows = workflows;
+                await this.projectRepository.save(project);
+            }
+
+            res.json({ 
+                message: "Workflows triggered successfully", 
+                project: project,
+                status: changed ? "Tasks processed" : "No pending tasks found"
+            });
+        } catch (error: any) {
+            res.status(500).json({ message: "Failed to trigger workflows", error: error.message });
+        }
+    }
 }
