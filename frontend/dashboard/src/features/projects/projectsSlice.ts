@@ -1,5 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import * as projectService from './ProjectService';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { ProjectService, Project, Task } from './ProjectService';
+
+// FORCE_REDEPLOY: Resyncing Panama Real Estate Project - 2026-03-22
 
 export const fetchProjects = createAsyncThunk('projects/fetchProjects', async () => {
     const response = await projectService.getProjects();
