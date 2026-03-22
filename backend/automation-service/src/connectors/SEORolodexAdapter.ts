@@ -2,19 +2,8 @@ import { BaseAdapter } from './BaseAdapter';
 
 export class SEORolodexAdapter extends BaseAdapter {
     constructor(apiKey: string) {
-        // Use the correct base URL from documentation
+        // Base URL from SEORolodex documentation
         super('https://pwvdyivpxtzvkymykigx.supabase.co/functions/v1', apiKey);
-    }
-
-    protected async request<T>(config: any): Promise<T> {
-        return super.request({
-            ...config,
-            headers: {
-                ...config.headers,
-                'X-API-Key': this.apiKey,
-                'Content-Type': 'application/json'
-            }
-        });
     }
 
     // SERP & Rank Tracking
@@ -118,7 +107,15 @@ export class SEORolodexAdapter extends BaseAdapter {
     }
 
     // Legacy/Compatibility Wrappers
-    async getAudit(params: { url: string }) { return this.siteAudit({ target: params.url }); }
-    async getKeywords(domain: string) { return this.keywordResearch({ keywords: [domain] }); }
-    async getBacklinks(domain: string) { return this.fetchBacklinkSummary({ target: domain }); }
+    async getAudit(params: { url: string }) {
+        return this.siteAudit({ target: params.url });
+    }
+
+    async getKeywords(domain: string) {
+        return this.keywordResearch({ keywords: [domain] });
+    }
+
+    async getBacklinks(domain: string) {
+        return this.fetchBacklinkSummary({ target: domain });
+    }
 }
