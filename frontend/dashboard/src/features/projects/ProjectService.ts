@@ -14,3 +14,26 @@ export const getProject = (id: string) => axiosInstance.get(`${API_URL}/${id}`);
 export const createProject = (project: any) => axiosInstance.post(API_URL, project);
 export const updateProject = (id: string, project: any) => axiosInstance.put(`${API_URL}/${id}`, project);
 export const deleteProject = (id: string) => axiosInstance.delete(`${API_URL}/${id}`);
+
+export interface Project {
+    id: string;
+    name: string;
+    description?: string;
+    status: string;
+    tags?: string[];
+    skills?: any[];
+    workflows?: any[];
+    repositoryUrl?: string;
+    branch?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface Task {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    createdAt: string;
+    skillId?: string;
+}

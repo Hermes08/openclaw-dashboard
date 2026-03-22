@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectService, Project, Task } from './ProjectService';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import * as projectService from './ProjectService';
+import { Project } from './ProjectService';
 
 // FORCE_REDEPLOY: Resyncing Panama Real Estate Project - 2026-03-22
 
@@ -20,19 +21,7 @@ export const addProject = createAsyncThunk('projects/addProject', async (project
     return response.data;
 });
 
-interface Project {
-    id: string;
-    name: string;
-    description?: string;
-    status: string;
-    tags?: string[];
-    skills?: any[];
-    workflows?: any[];
-    repositoryUrl?: string;
-    branch?: string;
-    createdAt: string;
-    updatedAt: string;
-}
+// Types imported from ProjectService
 
 interface ProjectsState {
     items: Project[];
