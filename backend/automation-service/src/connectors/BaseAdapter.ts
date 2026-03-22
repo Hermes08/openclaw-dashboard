@@ -9,7 +9,7 @@ export abstract class BaseAdapter {
         this.client = axios.create({
             baseURL,
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'X-API-Key': apiKey || '',
                 'Content-Type': 'application/json',
             },
         });
