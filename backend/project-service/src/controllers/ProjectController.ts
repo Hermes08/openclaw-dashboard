@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Project } from "../entities/Project";
+import axios from "axios";
+
+const AUTOMATION_SERVICE_URL = process.env.AUTOMATION_SERVICE_URL || 'http://localhost:3002';
 
 export class ProjectController {
     private projectRepository = AppDataSource.getRepository(Project);
@@ -39,11 +42,9 @@ export class ProjectController {
         try {
             const project = await this.projectRepository.findOneBy({ id: req.params.id });
             if (!project) return res.status(404).json({ message: "Project not found" });
-
             const task = req.body;
             task.status = task.status || 'pending';
             task.createdAt = task.createdAt || new Date().toISOString();
-
             const workflows: any[] = project.workflows || [];
             // Find or create the default workflow for this skill
             const skillId = task.skillId || 'website';
@@ -55,7 +56,6 @@ export class ProjectController {
             if (!workflow.steps) workflow.steps = [];
             workflow.steps.push(task);
             project.workflows = workflows;
-
             const result = await this.projectRepository.save(project);
             res.status(201).json({ message: "Task added", taskId: task.id, project: result });
         } catch (error: any) {
@@ -67,11 +67,9 @@ export class ProjectController {
         try {
             const project = await this.projectRepository.findOneBy({ id: req.params.id });
             if (!project) return res.status(404).json({ message: "Project not found" });
-
             const { taskId } = req.params;
             const workflows: any[] = project.workflows || [];
             let found = false;
-
             for (const wf of workflows) {
                 if (wf.steps) {
                     const step = wf.steps.find((s: any) => s.id === taskId);
@@ -85,9 +83,7 @@ export class ProjectController {
                     }
                 }
             }
-
             if (!found) return res.status(404).json({ message: "Task not found" });
-
             project.workflows = workflows;
             const result = await this.projectRepository.save(project);
             res.json({ message: "Task completed", taskId, project: result });
@@ -99,7 +95,6 @@ export class ProjectController {
     async getPendingTasks(req: Request, res: Response) {
         const projects = await this.projectRepository.find();
         const pendingTasks: any[] = [];
-
         projects.forEach(project => {
             if (project.workflows && Array.isArray(project.workflows)) {
                 project.workflows.forEach((workflow: any) => {
@@ -119,7 +114,6 @@ export class ProjectController {
                 });
             }
         });
-
         res.json(pendingTasks);
     }
 
@@ -127,34 +121,44 @@ export class ProjectController {
         try {
             const project = await this.projectRepository.findOneBy({ id: req.params.id });
             if (!project) return res.status(404).json({ message: "Project not found" });
+            console.log(`[runWorkflows] Triggering automation for project: ${project.name}`);
 
-            console.log(`[CRON] Manually triggering workflows for project: ${project.name}`);
-            
-            const workflows: any[] = project.workflows || [];
-            let changed = false;
+            // Resolve domain from project.domain field or derive from repositoryUrl
+            const domain = (project as any).domain ||
+                project.repositoryUrl?.replace(/.*github\.com\/[^/]+\//, '').replace(/\.git$/, '') ||
+                project.name;
 
-            workflows.forEach(wf => {
-                if (wf.steps) {
-                    wf.steps.forEach((step: any) => {
-                        if (step.status === 'pending') {
-                            step.status = 'completed';
-                            step.completedAt = new Date().toISOString();
-                            step.executedBy = 'manual-trigger';
-                            changed = true;
-                        }
-                    });
+            const triggeredWorkflows: string[] = [];
+            const errors: string[] = [];
+
+            // Trigger SEO workflows if project has seo/website skills
+            const hasWebsite = ((project as any).skills || []).some((s: any) =>
+                s.id === 'website' || s.id === 'seo'
+            );
+
+            if (hasWebsite || true) { // Always trigger if no skill config yet
+                const workflowTypes = ['SEO_AUDIT', 'SEO_COMPETITOR_ANALYSIS', 'SEO_BACKLINK_MONITOR', 'SEO_CONTENT_STRATEGY'];
+                for (const wfType of workflowTypes) {
+                    try {
+                        await axios.post(`${AUTOMATION_SERVICE_URL}/workflows/seo/audit`, {
+                            projectId: project.id,
+                            domain,
+                            workflowType: wfType,
+                            keyword: (project as any).contentKeyword || project.name || domain
+                        });
+                        triggeredWorkflows.push(wfType);
+                    } catch (err: any) {
+                        console.error(`[runWorkflows] Failed to trigger ${wfType}:`, err.message);
+                        errors.push(`${wfType}: ${err.message}`);
+                    }
                 }
-            });
-
-            if (changed) {
-                project.workflows = workflows;
-                await this.projectRepository.save(project);
             }
 
-            res.json({ 
-                message: "Workflows triggered successfully", 
-                project: project,
-                status: changed ? "Tasks processed" : "No pending tasks found"
+            res.json({
+                message: `Workflows triggered for ${project.name}`,
+                domain,
+                triggered: triggeredWorkflows,
+                errors
             });
         } catch (error: any) {
             res.status(500).json({ message: "Failed to trigger workflows", error: error.message });
