@@ -14,6 +14,9 @@ export class Project {
     @Column({ default: "active" })
     status!: string; // active, archived, completed
 
+    @Column({ default: "general" })
+    category!: string; // real-estate, tech, ecommerce, etc.
+
     @Column("simple-array", { nullable: true })
     tags?: string[];
 

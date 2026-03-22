@@ -20,6 +20,16 @@ const ProjectList: React.FC = () => {
     const projects = useAppSelector((state: any) => state.projects.items);
     const status = useAppSelector((state: any) => state.projects.status);
 
+    const getCategoryColor = (category: string) => {
+        const colors: Record<string, string> = {
+            'real-estate': '#6366f1',
+            'tech': '#10b981',
+            'ecommerce': '#f59e0b',
+            'general': '#64748b'
+        };
+        return colors[category] || colors['general'];
+    };
+
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchProjects());
@@ -62,9 +72,26 @@ const ProjectList: React.FC = () => {
                                     bgcolor: project.status === 'active' ? 'rgba(99, 102, 241, 0.1)' : 'rgba(255, 255, 255, 0.05)',
                                     color: project.status === 'active' ? 'primary.main' : 'text.secondary',
                                     border: '1px solid',
-                                    borderColor: project.status === 'active' ? 'rgba(99, 102, 241, 0.2)' : 'transparent'
+                                    borderColor: project.status === 'active' ? 'rgba(99, 102, 241, 0.2)' : 'transparent',
+                                    mr: 1
                                 }}
                             />
+                            {project.category && (
+                                <Chip
+                                    label={project.category}
+                                    size="small"
+                                    sx={{
+                                        fontWeight: 600,
+                                        fontSize: '0.7rem',
+                                        textTransform: 'uppercase',
+                                        height: 24,
+                                        bgcolor: `${getCategoryColor(project.category)}20`,
+                                        color: getCategoryColor(project.category),
+                                        border: '1px solid',
+                                        borderColor: `${getCategoryColor(project.category)}40`
+                                    }}
+                                />
+                            )}
                             <IconButton size="small"><MoreVertIcon /></IconButton>
                         </Box>
 
