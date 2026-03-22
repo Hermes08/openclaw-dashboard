@@ -140,7 +140,7 @@ export class ProjectController {
                 const workflowTypes = ['SEO_AUDIT', 'SEO_COMPETITOR_ANALYSIS', 'SEO_BACKLINK_MONITOR', 'SEO_CONTENT_STRATEGY'];
                 for (const wfType of workflowTypes) {
                     try {
-                        await axios.post(`${AUTOMATION_SERVICE_URL}/workflows/seo/audit`, {
+                        await axios.post(`${AUTOMATION_SERVICE_URL}/workflows/trigger`, {                            projectId: project.id,
                             projectId: project.id,
                             domain,
                             workflowType: wfType,
