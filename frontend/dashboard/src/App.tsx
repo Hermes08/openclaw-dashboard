@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-do
 import {
   Box, Drawer, AppBar, Toolbar, List, Typography, ListItem,
   ListItemButton, ListItemIcon, ListItemText, Paper, Chip,
-  LinearProgress, Badge, IconButton, Tooltip
+  LinearProgress, IconButton, Tooltip
 } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
