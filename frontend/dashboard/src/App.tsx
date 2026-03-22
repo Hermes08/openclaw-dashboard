@@ -15,6 +15,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ProjectList from './features/projects/ProjectList';
 import ProjectForm from './features/projects/ProjectForm';
 import TasksView from './features/projects/TasksView';
+import ApiDocs from './features/projects/ApiDocs';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import axios from 'axios';
 
 const drawerWidth = 240;
@@ -163,6 +165,7 @@ const App: React.FC = () => {
               { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
               { text: 'Projects', icon: <AssignmentIcon />, path: '/projects' },
               { text: 'Automation', icon: <AutorenewIcon />, path: '/automation' },
+              { text: 'Documentation', icon: <MenuBookIcon />, path: '/docs' },
             ].map((item) => (
               <ListItem key={item.text} disablePadding>
                 <ListItemButton component={Link} to={item.path}>
