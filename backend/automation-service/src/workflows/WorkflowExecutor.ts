@@ -16,6 +16,27 @@ export class WorkflowExecutor {
                     payload.apiKey
                 );
                 break;
+            case 'SEO_COMPETITOR_ANALYSIS':
+                await this.seoService.runCompetitorAnalysis(
+                    payload.projectId,
+                    payload.domain,
+                    payload.apiKey
+                );
+                break;
+            case 'SEO_BACKLINK_MONITOR':
+                await this.seoService.runBacklinkMonitor(
+                    payload.projectId,
+                    payload.domain,
+                    payload.apiKey
+                );
+                break;
+            case 'SEO_CONTENT_STRATEGY':
+                await this.seoService.runContentStrategy(
+                    payload.projectId,
+                    payload.keyword,
+                    payload.apiKey
+                );
+                break;
             case 'VIDEO_GENERATION':
                 await this.mediaService.produceVideo(payload);
                 break;

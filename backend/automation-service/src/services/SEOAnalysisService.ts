@@ -9,39 +9,74 @@ export class SEOAnalysisService {
         const seoAdapter = ConnectorFactory.getSEORolodex(apiKey);
 
         try {
-            // 1. Get Audit Result
-            const audit = await seoAdapter.getAudit({ url: domain });
-            console.log(`Audit Score for ${domain}: ${audit.score}`);
-
-            // 2. Generate Tasks based on issues
-            for (const issue of audit.issues) {
+            const audit: any = await seoAdapter.siteAudit({ target: domain });
+            for (const issue of (audit.issues || [])) {
                 await this.createProjectTask(projectId, {
                     title: `SEO Fix: ${issue.title}`,
                     description: issue.description,
                     priority: issue.severity === 'high' ? 'P0' : 'P1',
                     skillId: 'seo',
-                    source: 'seorolodex',
-                    metadata: { issue }
+                    source: 'seorolodex'
                 });
             }
-
-            // 3. Check for Keyword Gaps (Simplified)
-            const keywords = await seoAdapter.getKeywords(domain);
-            if (keywords && keywords.gaps) {
-                await this.createProjectTask(projectId, {
-                    title: `SEO Content Gap: New Keywords identified`,
-                    description: `Identified ${keywords.gaps.length} new keyword opportunities.`,
-                    priority: 'P2',
-                    skillId: 'seo',
-                    source: 'seorolodex',
-                    metadata: { keywords: keywords.gaps }
-                });
-            }
-
-            console.log(`SEO Audit completed for ${domain}`);
         } catch (error: any) {
-            console.error(`SEO Audit failed for ${domain}:`, error.message);
-            throw error;
+            console.error(`SEO Audit failed:`, error.message);
+        }
+    }
+
+    async runCompetitorAnalysis(projectId: string, domain: string, apiKey: string) {
+        const seoAdapter = ConnectorFactory.getSEORolodex(apiKey);
+        try {
+            const competitors: any = await seoAdapter.analyzeCompetitors({ target: domain, limit: 5 });
+            const compDomains = competitors.map((c: any) => c.domain);
+            
+            const gap: any = await seoAdapter.keywordGapAnalysis({ 
+                yourDomain: domain, 
+                competitorDomains: compDomains 
+            });
+
+            await this.createProjectTask(projectId, {
+                title: 'Competitor Keyword Gap Report',
+                description: `Identified gaps against ${compDomains.join(', ')}.`,
+                priority: 'P1',
+                skillId: 'seo',
+                metadata: { gap }
+            });
+        } catch (error: any) {
+            console.error(`Competitor Analysis failed:`, error.message);
+        }
+    }
+
+    async runBacklinkMonitor(projectId: string, domain: string, apiKey: string) {
+        const seoAdapter = ConnectorFactory.getSEORolodex(apiKey);
+        try {
+            const summary: any = await seoAdapter.fetchBacklinkSummary({ target: domain });
+            if (summary.spam_score > 50) {
+                await this.createProjectTask(projectId, {
+                    title: 'High Spam Score Detected',
+                    description: `Domain has a spam score of ${summary.spam_score}. Review backlinks immediately.`,
+                    priority: 'P0',
+                    skillId: 'seo'
+                });
+            }
+        } catch (error: any) {
+            console.error(`Backlink Monitoring failed:`, error.message);
+        }
+    }
+
+    async runContentStrategy(projectId: string, keyword: string, apiKey: string) {
+        const seoAdapter = ConnectorFactory.getSEORolodex(apiKey);
+        try {
+            const strategy: any = await seoAdapter.contentStrategist({ keyword });
+            await this.createProjectTask(projectId, {
+                title: `Content Strategy: ${keyword}`,
+                description: `AI-generated strategy for "${keyword}".`,
+                priority: 'P2',
+                skillId: 'content',
+                metadata: { strategy }
+            });
+        } catch (error: any) {
+            console.error(`Content Strategy failed:`, error.message);
         }
     }
 
@@ -49,7 +84,7 @@ export class SEOAnalysisService {
         try {
             await axios.post(`${this.projectServiceUrl}/projects/${projectId}/tasks`, task);
         } catch (error: any) {
-            console.error(`Failed to sync task to Project Service:`, error.message);
+            console.error(`Failed to sync task:`, error.message);
         }
     }
 }
