@@ -90,6 +90,21 @@ const TasksView: React.FC = () => {
                         <RefreshIcon />
                     </IconButton>
                 </Tooltip>
+                <Tooltip title="Run Workflows">
+                    <IconButton 
+                        onClick={async () => {
+                            try {
+                                await axiosInstance.post(`/api/projects/${id}/run-workflows`);
+                                fetchProject();
+                            } catch (e) {
+                                console.error('Failed to run workflows', e);
+                            }
+                        }} 
+                        color="warning"
+                    >
+                        <PendingIcon />
+                    </IconButton>
+                </Tooltip>
             </Box>
 
             {/* Stats */}
