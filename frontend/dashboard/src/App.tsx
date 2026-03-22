@@ -195,6 +195,7 @@ const App: React.FC = () => {
                 </Paper>
               </Box>
             } />
+            <Route path="/docs" element={<ApiDocs />} />
           </Routes>
         </Box>
       </Box>

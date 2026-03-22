@@ -6,14 +6,11 @@ import {
   Divider, 
   List, 
   ListItem, 
-  ListItemIcon, 
   ListItemText,
   Chip
 } from '@mui/material';
-import TerminalIcon from '@mui/icons-material/Terminal';
 import ShieldIcon from '@mui/icons-material/Shield';
 import LayersIcon from '@mui/icons-material/Layers';
-import CodeIcon from '@mui/icons-material/Code';
 
 const ApiDocs: React.FC = () => {
   return (
