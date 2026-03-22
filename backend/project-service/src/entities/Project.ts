@@ -17,6 +17,9 @@ export class Project {
     @Column({ default: "general" })
     category!: string; // real-estate, tech, ecommerce, etc.
 
+    @Column({ nullable: true })
+    domain?: string; // e.g. panamarealestatesale.com - used by automation cronjobs
+
     @Column("simple-array", { nullable: true })
     tags?: string[];
 
