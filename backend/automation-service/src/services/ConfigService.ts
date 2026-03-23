@@ -5,12 +5,12 @@ export class ConfigService {
 
     async getProjectConfig(projectId: string): Promise<any> {
         try {
-            const response = await axios.get(`${this.projectServiceUrl}/projects/${projectId}`);
+            const response = await axios.get(`${this.projectServiceUrl}/api/projects/${projectId}`);
             const project = response.data;
-            
+
             // Return combined global and project-specific config
             return {
-                domain: project.repositoryUrl, // Assuming this stores the domain for now
+                domain: project.domain || project.repositoryUrl, // Support both fields
                 seo: {
                     apiKey: project.skills?.seo?.apiKey || process.env.SEO_ROLODEX_API_KEY
                 },
