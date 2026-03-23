@@ -6,7 +6,7 @@ import { YouTubePublishingAdapter } from './YouTubePublishingAdapter';
 
 export class ConnectorFactory {
     static getSEORolodex(apiKey: string) {
-        return new SEORolodexAdapter(apiKey);
+        return new SEORolodexAdapter(apiKey, process.env.SEO_ROLODEX_ANON_KEY);
     }
 
     static getElevenLabs(apiKey: string) {
