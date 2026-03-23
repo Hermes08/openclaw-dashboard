@@ -167,7 +167,7 @@ export class SEOAnalysisService {
         const seoAdapter = ConnectorFactory.getSEORolodex(apiKey);
 
         try {
-            const strategy: any = await seoAdapter.contentStrategist({ keyword });
+            const strategy: any = await seoAdapter.contentStrategist({ target: keyword });
 
             await this.createProjectTask(projectId, {
                 title: `Content Strategy: ${keyword}`,
