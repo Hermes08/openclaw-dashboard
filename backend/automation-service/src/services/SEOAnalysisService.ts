@@ -195,7 +195,7 @@ export class SEOAnalysisService {
     private async createProjectTask(projectId: string, task: any) {
         try {
             console.log(`[SEOAnalysisService] Creating task for project ${projectId}: ${task.title}`);
-            await axios.post(`${this.projectServiceUrl}/projects/${projectId}/tasks`, task);
+            await axios.post(`${this.projectServiceUrl}/api/projects/${projectId}/tasks`, task);
         } catch (error: any) {
             console.error(`[SEOAnalysisService] Failed to sync task to project-service:`, error.message);
         }
