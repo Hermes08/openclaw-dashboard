@@ -1,9 +1,9 @@
 import { BaseAdapter } from './BaseAdapter';
 
 export class SEORolodexAdapter extends BaseAdapter {
-    constructor(apiKey: string) {
-        // Base URL from SEORolodex documentation
-        super('https://pwvdyivpxtzvkymykigx.supabase.co/functions/v1', apiKey);
+    constructor(apiKey: string, anonKey?: string) {
+        // Base URL from SEORolodex documentation (Supabase project: oahhkprnyshnlmozkzsx)
+        super('https://oahhkprnyshnlmozkzsx.supabase.co/functions/v1', apiKey, anonKey);
     }
 
     // SERP & Rank Tracking
@@ -37,20 +37,20 @@ export class SEORolodexAdapter extends BaseAdapter {
         return this.request({ method: 'POST', url: '/analyze-competitors', data });
     }
 
-    async keywordGapAnalysis(data: { yourDomain: string, competitorDomains: string[], location_code?: number, language_code?: string }) {
+    async keywordGapAnalysis(data: { targets: string[], location_code?: number, language_code?: string }) {
         return this.request({ method: 'POST', url: '/keyword-gap-analysis', data });
     }
 
-    async analyzeKeywordIntersection(data: { target1: string, target2: string, location_code?: number, language_code?: string }) {
+    async analyzeKeywordIntersection(data: { targets: string[], keywords: string[], location_code?: number }) {
         return this.request({ method: 'POST', url: '/analyze-keyword-intersection', data });
     }
 
     // Backlink Analysis
-    async fetchBacklinkSummary(data: { target: string, include_subdomains?: boolean, exclude_internal_backlinks?: boolean, include_indirect_links?: boolean }) {
+    async fetchBacklinkSummary(data: { target: string }) {
         return this.request({ method: 'POST', url: '/fetch-backlink-summary', data });
     }
 
-    async fetchBacklinks(data: { target: string, limit?: number, include_subdomains?: boolean, backlinks_status_type?: 'live' | 'all' }) {
+    async fetchBacklinks(data: { target: string, limit?: number, offset?: number }) {
         return this.request({ method: 'POST', url: '/fetch-backlinks', data });
     }
 
@@ -62,16 +62,16 @@ export class SEORolodexAdapter extends BaseAdapter {
         return this.request({ method: 'POST', url: '/fetch-backlink-history', data });
     }
 
-    async monitorBacklinks(data: { target: string, date_from?: string, date_to?: string }) {
+    async monitorBacklinks(data: { target: string, keywords?: string[] }) {
         return this.request({ method: 'POST', url: '/monitor-backlinks', data });
     }
 
-    async analyzeBacklinkIntersection(data: { targets: string[], exclude_target?: string }) {
+    async analyzeBacklinkIntersection(data: { targets: string[] }) {
         return this.request({ method: 'POST', url: '/analyze-backlink-intersection', data });
     }
 
-    // Site Audit & Domains
-    async siteAudit(data: { target: string, max_crawl_pages?: number, enable_javascript?: boolean, enable_browser_rendering?: boolean }) {
+    // Technical SEO
+    async siteAudit(data: { target: string, max_crawl_pages?: number }) {
         return this.request({ method: 'POST', url: '/site-audit', data });
     }
 
@@ -79,43 +79,29 @@ export class SEORolodexAdapter extends BaseAdapter {
         return this.request({ method: 'POST', url: '/check-domains', data });
     }
 
-    // Content & LLM Optimization
-    async llmOptimization(data: { keywords: string[], location_code?: number, language_code?: string }) {
+    // Content & AI
+    async llmOptimization(data: { target: string, keywords?: string[] }) {
         return this.request({ method: 'POST', url: '/llm-optimization', data });
     }
 
-    async contentStrategist(data: { keyword: string, location_code?: number, language_code?: string }) {
+    async contentStrategist(data: { target: string, keywords?: string[], competitors?: string[] }) {
         return this.request({ method: 'POST', url: '/content-strategist', data });
     }
 
-    // Local SEO
-    async localSeoLookup(data: { keyword: string, location_name?: string, location_code?: number, limit?: number }) {
+    async localSeoLookup(data: { target: string, location_code?: number }) {
         return this.request({ method: 'POST', url: '/local-seo-lookup', data });
     }
 
-    // YouTube/Amazon Tracking
-    async youtubeTracking(data: { type: 'keyword' | 'video' | 'channel', query: string, location_code?: number, language_code?: string }) {
+    // YouTube & Amazon
+    async youtubeTracking(data: { channel_url?: string, video_url?: string, keywords?: string[] }) {
         return this.request({ method: 'POST', url: '/youtube-tracking', data });
     }
 
-    async youtubeIntel(data: { keyword: string, location_code?: number, language_code?: string, limit?: number }) {
+    async youtubeIntel(data: { channel_url?: string, topic?: string }) {
         return this.request({ method: 'POST', url: '/youtube-intel', data });
     }
 
-    async amazonTracking(data: { keyword: string, location_code?: number, language_code?: string, limit?: number }) {
+    async amazonTracking(data: { asin?: string, keywords?: string[] }) {
         return this.request({ method: 'POST', url: '/amazon-tracking', data });
-    }
-
-    // Legacy/Compatibility Wrappers
-    async getAudit(params: { url: string }) {
-        return this.siteAudit({ target: params.url });
-    }
-
-    async getKeywords(domain: string) {
-        return this.keywordResearch({ keywords: [domain] });
-    }
-
-    async getBacklinks(domain: string) {
-        return this.fetchBacklinkSummary({ target: domain });
     }
 }
