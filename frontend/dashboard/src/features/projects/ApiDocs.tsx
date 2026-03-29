@@ -7,9 +7,9 @@ import {
   List, 
   ListItem, 
   ListItemText,
-  Chip,
-  Grid
+  Chip
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import ShieldIcon from '@mui/icons-material/Shield';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
