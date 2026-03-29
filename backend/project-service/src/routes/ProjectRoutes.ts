@@ -12,6 +12,7 @@ router.put("/:id", (req, res) => projectController.update(req, res));
 router.post("/:id/tasks", (req, res) => projectController.addTask(req, res));
 router.post("/:id/run-workflows", (req, res) => projectController.runWorkflows(req, res));
 router.put("/:id/tasks/:taskId/complete", (req, res) => projectController.completeTask(req, res));
+router.delete("/:id/tasks", (req, res) => projectController.clearTasks(req, res));
 router.delete("/:id", (req, res) => projectController.delete(req, res));
 
 export default router;

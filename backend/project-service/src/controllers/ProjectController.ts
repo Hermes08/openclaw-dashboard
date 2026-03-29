@@ -63,6 +63,25 @@ export class ProjectController {
         }
     }
 
+    async clearTasks(req: Request, res: Response) {
+        try {
+            const project = await this.projectRepository.findOneBy({ id: req.params.id });
+            if (!project) return res.status(404).json({ message: "Project not found" });
+
+            const workflows: any[] = project.workflows || [];
+            const clearedCount = workflows.reduce((acc: number, wf: any) => acc + (wf.steps?.length || 0), 0);
+
+            // Remove all steps from every workflow
+            workflows.forEach((wf: any) => { wf.steps = []; });
+            project.workflows = workflows;
+
+            const result = await this.projectRepository.save(project);
+            res.json({ message: "All tasks cleared", clearedCount, project: result });
+        } catch (error: any) {
+            res.status(500).json({ message: "Failed to clear tasks", error: error.message });
+        }
+    }
+
     async completeTask(req: Request, res: Response) {
         try {
             const project = await this.projectRepository.findOneBy({ id: req.params.id });

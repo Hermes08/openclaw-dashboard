@@ -136,7 +136,7 @@ const ApiDocs: React.FC = () => {
         </Typography>
       </Paper>
 
-      <Paper sx={{ p: 4, borderRadius: 4, mb: 6 }}>
+      <Paper sx={{ p: 4, borderRadius: 4, mb: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <Chip label="PUT" color="warning" size="small" sx={{ fontWeight: 800 }} />
           <Typography variant="subtitle1" sx={{ fontWeight: 700, fontFamily: 'monospace' }}>/api/projects/:id/tasks/:taskId</Typography>
@@ -144,6 +144,30 @@ const ApiDocs: React.FC = () => {
         <Typography variant="body2" color="text.secondary">
           Update a task status (e.g., mark as completed) and log the result.
         </Typography>
+      </Paper>
+
+      <Paper sx={{ p: 4, borderRadius: 4, mb: 6 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+          <Chip label="DELETE" color="error" size="small" sx={{ fontWeight: 800 }} />
+          <Typography variant="subtitle1" sx={{ fontWeight: 700, fontFamily: 'monospace' }}>/api/projects/:id/tasks</Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Clear all tasks from a project's workflows. Returns the number of tasks removed and the updated project.
+        </Typography>
+        <Box sx={{
+          bgcolor: 'grey.900',
+          color: 'grey.300',
+          p: 2,
+          borderRadius: 2,
+          fontFamily: 'monospace',
+          fontSize: '0.85rem'
+        }}>
+          <pre>{JSON.stringify({
+  "message": "All tasks cleared",
+  "clearedCount": 35,
+  "project": { "id": "...", "workflows": [] }
+}, null, 2)}</pre>
+        </Box>
       </Paper>
 
       {/* SEO Rolodex Section */}
