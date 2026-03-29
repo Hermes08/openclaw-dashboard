@@ -7,9 +7,9 @@ import {
   List, 
   ListItem, 
   ListItemText,
-  Chip
+  Chip,
+  Grid
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import ShieldIcon from '@mui/icons-material/Shield';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -26,7 +26,7 @@ const ApiDocs: React.FC = () => {
       </Typography>
 
       <Grid container spacing={4} sx={{ mb: 6 }}>
-        <Grid xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Paper sx={{ p: 4, borderRadius: 4, height: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
               <LayersIcon color="primary" />
@@ -54,7 +54,7 @@ const ApiDocs: React.FC = () => {
             </List>
           </Paper>
         </Grid>
-        <Grid xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Paper sx={{ p: 4, borderRadius: 4, height: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
               <ShieldIcon color="primary" />
@@ -189,7 +189,7 @@ const ApiDocs: React.FC = () => {
             { tag: 'AUDIT', path: '/site-audit', desc: 'Run a technical SEO crawl on the target project.' },
             { tag: 'CONTENT', path: '/llm-optimization', desc: 'AI-driven content optimization strategies.' }
           ].map((item, idx) => (
-            <Grid xs={12} md={6} key={idx}>
+            <Grid size={{ xs: 12, md: 6 }} key={idx}>
               <Paper sx={{ p: 3, borderRadius: 3, bgcolor: 'grey.50', border: '1px solid', borderColor: 'grey.200' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
                   <Chip label={item.tag} size="small" sx={{ fontSize: '0.6rem', fontWeight: 900, height: 16 }} />
