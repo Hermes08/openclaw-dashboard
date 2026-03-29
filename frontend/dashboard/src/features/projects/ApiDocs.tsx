@@ -26,7 +26,7 @@ const ApiDocs: React.FC = () => {
       </Typography>
 
       <Grid container spacing={4} sx={{ mb: 6 }}>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Paper sx={{ p: 4, borderRadius: 4, height: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
               <LayersIcon color="primary" />
@@ -54,7 +54,7 @@ const ApiDocs: React.FC = () => {
             </List>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Paper sx={{ p: 4, borderRadius: 4, height: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
               <ShieldIcon color="primary" />
@@ -189,10 +189,10 @@ const ApiDocs: React.FC = () => {
             { tag: 'AUDIT', path: '/site-audit', desc: 'Run a technical SEO crawl on the target project.' },
             { tag: 'CONTENT', path: '/llm-optimization', desc: 'AI-driven content optimization strategies.' }
           ].map((item, idx) => (
-            <Grid item xs={12} md={6} key={idx}>
+            <Grid xs={12} md={6} key={idx}>
               <Paper sx={{ p: 3, borderRadius: 3, bgcolor: 'grey.50', border: '1px solid', borderColor: 'grey.200' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                  <Chip label={item.tag} size="extra-small" sx={{ fontSize: '0.6rem', fontWeight: 900, height: 16 }} />
+                  <Chip label={item.tag} size="small" sx={{ fontSize: '0.6rem', fontWeight: 900, height: 16 }} />
                   <Typography variant="body2" sx={{ fontWeight: 700, fontFamily: 'monospace' }}>{item.path}</Typography>
                 </Box>
                 <Typography variant="caption" color="text.secondary">{item.desc}</Typography>
